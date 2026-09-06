@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Verification</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="verification-card">
+            <div class="header">
+                <span class="badge">TESTING</span>
+                <h1>Device Verification</h1>
+                <p>Verify your device to unlock full access to the bot</p>
+            </div>
+
+            <div id="verificationStatus">
+                <div class="status-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h2 id="statusTitle">Start Verification</h2>
+                <p id="statusMessage">Click the button below to verify your device</p>
+                
+                <button id="verifyBtn" class="verify-button">
+                    <i class="fas fa-check-circle"></i>
+                    Start Verification
+                </button>
+            </div>
+
+            <div id="verificationProgress" style="display: none;">
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <span class="progress-text" id="progressText">0%</span>
+                </div>
+                <p id="progressMessage">Checking device...</p>
+            </div>
+
+            <div id="resultContainer" style="display: none;">
+                <div class="result-icon" id="resultIcon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2 id="resultTitle">Verification Successful</h2>
+                <p id="resultMessage">Your device has been verified successfully</p>
+                <div class="result-details" id="resultDetails">
+                    <div class="detail-item">
+                        <span class="detail-label">IP Address</span>
+                        <span class="detail-value" id="ipAddress">-</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Country</span>
+                        <span class="detail-value" id="country">-</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">ISP</span>
+                        <span class="detail-value" id="isp">-</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Status</span>
+                        <span class="detail-value" id="securityStatus">-</span>
+                    </div>
+                </div>
+                <button id="retryBtn" class="retry-button" style="display: none;">
+                    <i class="fas fa-redo"></i>
+                    Try Again
+                </button>
+            </div>
+
+            <div class="footer">
+                <span>Secured by <a href="#">Verification Protocol</a></span>
+                <div class="music-control">
+                    <i class="fas fa-music" id="musicIcon"></i>
+                    <button id="playPauseBtn" class="play-pause-btn">
+                        <i class="fas fa-play"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
