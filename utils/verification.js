@@ -2,10 +2,9 @@ const axios = require('axios');
 
 const verifyIP = async (ip) => {
   try {
-    // Check if IP is VPN/Proxy using multiple services
-    const [ipinfo, ipquality] = await Promise.allSettled([
+    // Use only free services
+    const [ipinfo] = await Promise.allSettled([
       axios.get(`https://ipinfo.io/${ip}/json`),
-      axios.get(`https://ipqualityscore.com/api/json/ip/${process.env.IP_QUALITY_KEY || ''}/${ip}`)
     ]);
 
     const result = {
@@ -21,7 +20,7 @@ const verifyIP = async (ip) => {
       details: {}
     };
 
-    // Parse IPInfo data
+    // Parse IPInfo data (this is free - no key needed)
     if (ipinfo.status === 'fulfilled' && ipinfo.value.data) {
       const data = ipinfo.value.data;
       result.country = data.country || '';
@@ -29,19 +28,17 @@ const verifyIP = async (ip) => {
       result.region = data.region || '';
       result.isp = data.org || '';
       result.details.ipinfo = data;
+      
+      // Basic VPN detection using IPInfo data
+      // Check if ISP is known VPN provider (basic detection)
+      const vpnKeywords = ['vpn', 'proxy', 'hosting', 'cloud', 'datacenter'];
+      if (data.org) {
+        const ispLower = data.org.toLowerCase();
+        result.isVPN = vpnKeywords.some(keyword => ispLower.includes(keyword));
+      }
     }
 
-    // Parse IPQualityScore data
-    if (ipquality.status === 'fulfilled' && ipquality.value.data) {
-      const data = ipquality.value.data;
-      result.isVPN = data.vpn || false;
-      result.isProxy = data.proxy || false;
-      result.isTor = data.tor || false;
-      result.risk_score = data.risk_score || 0;
-      result.details.ipquality = data;
-    }
-
-    // Check if using airplane mode or localhost
+    // Check if using localhost/airplane mode
     const isAirplaneMode = !ip || ip === '::1' || ip === '127.0.0.1' || ip === 'localhost';
     
     return {
